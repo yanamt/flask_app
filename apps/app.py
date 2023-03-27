@@ -14,7 +14,9 @@ def create_app():
     app.config.from_mapping(
         SECRET_KEY="2ajwjduxodfhpgj223er3red",
         SQLALCHEMY_DATABASE_URI=f"sqlite:///{Path(__file__).parent.parent / 'local.sqlite'}",
-        SQLALCHEMY_TRACK_MODIFICATIONS=False
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        #SQLをコンソールに出力する
+        SQLALCHEMY_ECHO=True
     )
     #SQLAlchemyとappを連携
     db.init_app(app)
