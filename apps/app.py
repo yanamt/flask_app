@@ -4,15 +4,20 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 
+from apps.config import config
+
 #SQLAlchemyをインスタンス化する
 db=SQLAlchemy()
 csrf=CSRFProtect()
 
 #create_app関数の作成
-def create_app():
+def create_app(config_key):
     #Flaskインスタンス生成
     app=Flask(__name__)
+    #config_keyに対応する環境のconfigクラスを読み込む
+    app.config.from_object(config[config_key])
     #アプリのコンフィグ設定
+    """
     app.config.from_mapping(
         SECRET_KEY="2ajwjduxodfhpgj223er3red",
         SQLALCHEMY_DATABASE_URI=f"sqlite:///{Path(__file__).parent.parent / 'local.sqlite'}",
@@ -21,6 +26,7 @@ def create_app():
         SQLALCHEMY_ECHO=True,
         WTF_CSRF_SECRET_KEY="Aucdioskcok0l"
     )
+    """
     #SQLAlchemyとappを連携
     db.init_app(app)
     csrf.init_app(app)
