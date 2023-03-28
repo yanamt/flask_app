@@ -37,5 +37,10 @@ def create_app(config_key):
     #register_blueprintでcrudをアプリに登録
     app.register_blueprint(crud_views.crud,url_prefix="/crud")
 
+    #authアプリからviewsをインポート
+    from apps.auth import views as auth_views
+    #blueprintを追加
+    app.register_blueprint(auth_views.auth,url_prefix="/auth")
+
     return app
 
