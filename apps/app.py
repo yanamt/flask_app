@@ -3,12 +3,18 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
+from flask_login import LoginManager
 
 from apps.config import config
 
 #SQLAlchemyをインスタンス化する
 db=SQLAlchemy()
 csrf=CSRFProtect()
+#loginmanagerをインスタンス化
+login_manager=LoginManager()
+#login_view属性に未ログイン時にリダイレクトするエンドポイントを指定
+login_manager.login_view="auth.signup"
+login_manager.login_message=""
 
 #create_app関数の作成
 def create_app(config_key):
@@ -32,6 +38,8 @@ def create_app(config_key):
     csrf.init_app(app)
     #Migrateとappを連携
     Migrate(app,db)
+    #login_managerをアプrケーションと連携
+    login_manager.init_app(app)
     #crudアプリからviewsをimportする
     from apps.crud import views as crud_views
     #register_blueprintでcrudをアプリに登録
