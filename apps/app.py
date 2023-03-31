@@ -36,10 +36,10 @@ def create_app(config_key):
     #SQLAlchemyとappを連携
     db.init_app(app)
     csrf.init_app(app)
-    #Migrateとappを連携
-    Migrate(app,db)
     #login_managerをアプrケーションと連携
     login_manager.init_app(app)
+    #Migrateとappを連携
+    Migrate(app,db)
     #crudアプリからviewsをimportする
     from apps.crud import views as crud_views
     #register_blueprintでcrudをアプリに登録
